@@ -1,0 +1,943 @@
+{
+  "v": "1",
+  "blueprint": {
+    "start-": {
+      "id": "start-",
+      "type": "Start",
+      "data": {
+        "name": "start",
+        "label": "Start",
+        "_type": "Start",
+        "input": {},
+        "control_flow": {
+          "without_trigger": true,
+          "signals": [
+            "Start"
+          ]
+        },
+        "output": {}
+      },
+      "position": {
+        "x": 23,
+        "y": 73
+      }
+    },
+    "22be8483fd5c43ea87891f8bf364e4de-": {
+      "id": "22be8483fd5c43ea87891f8bf364e4de-",
+      "type": "Flow",
+      "position": {
+        "x": 210.82928155615718,
+        "y": 70.63644546522332
+      },
+      "data": {
+        "label": "GET vin from Ride",
+        "name": "get",
+        "_type": "Flow",
+        "input": {
+          "url": {
+            "_type": "String",
+            "label": "URL",
+            "value": {
+              "String": "http://localhost:8000/api/v1/deployments/vin"
+            },
+            "is_dynamic_input_trigger": false
+          },
+          "mode": {
+            "_type": "Enum",
+            "label": "Mode",
+            "value": {
+              "Enum": "cors"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "cache": {
+            "_type": "Enum",
+            "label": "Cache",
+            "value": {
+              "Enum": "default"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "credentials": {
+            "_type": "Enum",
+            "label": "Credentials",
+            "value": {
+              "Enum": "same-origin"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "referrer_policy": {
+            "_type": "Enum",
+            "label": "Referrer Policy",
+            "value": {
+              "Enum": ""
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "headers": {
+            "_type": "Json",
+            "label": "Headers",
+            "value": {
+              "Json": "{\"Content-Type\":\"application/json\"}"
+            },
+            "is_dynamic_input_trigger": false
+          }
+        },
+        "output": {
+          "status": {
+            "_type": "Number",
+            "label": "Status",
+            "value": {
+              "Number": 404
+            }
+          },
+          "response": {
+            "_type": "Json",
+            "label": "Response",
+            "value": {
+              "Json": "{}"
+            },
+            "is_connected": true
+          },
+          "error": {
+            "_type": "String",
+            "label": "Error",
+            "value": {
+              "String": "{}"
+            },
+            "is_connected": false
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Success",
+            "Fail"
+          ]
+        }
+      }
+    },
+    "estart-Start-22be8483fd5c43ea87891f8bf364e4de-Run": {
+      "source": "start-",
+      "sourceHandle": "Start",
+      "target": "22be8483fd5c43ea87891f8bf364e4de-",
+      "targetHandle": "Run",
+      "id": "estart-Start-22be8483fd5c43ea87891f8bf364e4de-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "3231a8377804482e8ab2309315479f84-": {
+      "id": "3231a8377804482e8ab2309315479f84-",
+      "type": "Calc",
+      "position": {
+        "x": 443,
+        "y": 83
+      },
+      "data": {
+        "label": "Extract VIN Value",
+        "name": "extract_string_value",
+        "_type": "Calc",
+        "input": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true
+          },
+          "key": {
+            "_type": "String",
+            "label": "key",
+            "value": {
+              "String": "vin"
+            },
+            "is_dynamic_input_trigger": false
+          }
+        },
+        "output": {
+          "value": {
+            "_type": "String",
+            "label": "value",
+            "value": {
+              "String": ""
+            },
+            "is_connected": true
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Success",
+            "Error"
+          ]
+        }
+      }
+    },
+    "e22be8483fd5c43ea87891f8bf364e4de-Success-3231a8377804482e8ab2309315479f84-Run": {
+      "source": "22be8483fd5c43ea87891f8bf364e4de-",
+      "sourceHandle": "Success",
+      "target": "3231a8377804482e8ab2309315479f84-",
+      "targetHandle": "Run",
+      "id": "e22be8483fd5c43ea87891f8bf364e4de-Success-3231a8377804482e8ab2309315479f84-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e22be8483fd5c43ea87891f8bf364e4de-response-3231a8377804482e8ab2309315479f84-body": {
+      "source": "22be8483fd5c43ea87891f8bf364e4de-",
+      "sourceHandle": "response",
+      "target": "3231a8377804482e8ab2309315479f84-",
+      "targetHandle": "body",
+      "id": "e22be8483fd5c43ea87891f8bf364e4de-response-3231a8377804482e8ab2309315479f84-body",
+      "style": {
+        "stroke": "#ffcc00"
+      }
+    },
+    "324964d867e04a9cbf818c30f1bb31e5-": {
+      "id": "324964d867e04a9cbf818c30f1bb31e5-",
+      "type": "Calc",
+      "position": {
+        "x": 724.7714247965796,
+        "y": 131.55348442267257
+      },
+      "data": {
+        "name": "concat",
+        "label": "Build Labcar Build-Order Query",
+        "_type": "Calc",
+        "input": {
+          "origin": {
+            "value": {
+              "String": "query GetLabcarBuildOrder{ metadataPage(serialNoContains: \""
+            },
+            "_type": "String",
+            "label": "Origin"
+          },
+          "str1": {
+            "value": {
+              "String": ""
+            },
+            "_type": "String",
+            "label": "String 1",
+            "is_connected": true
+          },
+          "str2": {
+            "value": {
+              "String": "\", limit: 1, offset: 0) { records { serialNo optionCodes data }}}"
+            },
+            "_type": "String",
+            "label": "String 2"
+          }
+        },
+        "output": {
+          "str": {
+            "value": {
+              "String": ""
+            },
+            "_type": "String",
+            "label": "Output",
+            "is_connected": true
+          }
+        }
+      }
+    },
+    "e3231a8377804482e8ab2309315479f84-value-324964d867e04a9cbf818c30f1bb31e5-str1": {
+      "source": "3231a8377804482e8ab2309315479f84-",
+      "sourceHandle": "value",
+      "target": "324964d867e04a9cbf818c30f1bb31e5-",
+      "targetHandle": "str1",
+      "id": "e3231a8377804482e8ab2309315479f84-value-324964d867e04a9cbf818c30f1bb31e5-str1",
+      "style": {
+        "stroke": "#cc0066"
+      }
+    },
+    "00fd8c6f5d804133b13437cb900c4b83-": {
+      "id": "00fd8c6f5d804133b13437cb900c4b83-",
+      "type": "Flow",
+      "position": {
+        "x": 1537,
+        "y": 34
+      },
+      "data": {
+        "label": "POST Elemental",
+        "name": "post",
+        "_type": "Flow",
+        "input": {
+          "url": {
+            "_type": "String",
+            "label": "URL",
+            "value": {
+              "String": "https://elemental.app.usubv.plant.scoutway.io/elemental/graphql"
+            },
+            "is_dynamic_input_trigger": false
+          },
+          "mode": {
+            "_type": "Enum",
+            "label": "Mode",
+            "value": {
+              "Enum": "cors"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "cache": {
+            "_type": "Enum",
+            "label": "Cache",
+            "value": {
+              "Enum": "default"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "credentials": {
+            "_type": "Enum",
+            "label": "Credentials",
+            "value": {
+              "Enum": "same-origin"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "referrer_policy": {
+            "_type": "Enum",
+            "label": "Referrer Policy",
+            "value": {
+              "Enum": ""
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "is_dynamic_input_trigger": false
+          },
+          "headers": {
+            "_type": "Json",
+            "label": "Headers",
+            "value": {
+              "Json": "{\"Content-Type\":\"application/json\"}"
+            },
+            "is_dynamic_input_trigger": false
+          },
+          "body": {
+            "_type": "Json",
+            "label": "Body",
+            "value": {
+              "Json": "{}"
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true
+          }
+        },
+        "output": {
+          "status": {
+            "_type": "Number",
+            "label": "Status",
+            "value": {
+              "Number": 404
+            },
+            "is_connected": false
+          },
+          "response": {
+            "_type": "Json",
+            "label": "Response",
+            "value": {
+              "Json": "{}"
+            },
+            "is_connected": true
+          },
+          "error": {
+            "_type": "String",
+            "label": "Error",
+            "value": {
+              "String": "{}"
+            },
+            "is_connected": true
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Success",
+            "Fail"
+          ]
+        }
+      }
+    },
+    "3d136efc87734284b558477d08b3966b-": {
+      "id": "3d136efc87734284b558477d08b3966b-",
+      "type": "Calc",
+      "position": {
+        "x": 957,
+        "y": 41.999999999999986
+      },
+      "data": {
+        "label": "Insert key (query) JSON",
+        "name": "insert_key_value_in_json",
+        "_type": "Calc",
+        "input": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "is_dynamic_input_trigger": false
+          },
+          "key": {
+            "_type": "String",
+            "label": "key",
+            "value": {
+              "String": "query"
+            },
+            "is_dynamic_input_trigger": false
+          },
+          "val": {
+            "_type": "Enum",
+            "label": "val",
+            "value": {
+              "Enum": "String"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "dynamic_inputs_map": {
+              "String": {
+                "String": {
+                  "label": "String",
+                  "_type": "String",
+                  "value": {
+                    "String": ""
+                  },
+                  "is_connected": true
+                }
+              }
+            },
+            "is_dynamic_input_trigger": true
+          }
+        },
+        "output": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "is_connected": true
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Parsed",
+            "Error"
+          ]
+        }
+      }
+    },
+    "8d925b2e6fac42d2901b979953cf6111-": {
+      "type": "Calc",
+      "position": {
+        "x": 1243,
+        "y": 43.999999999999986
+      },
+      "id": "8d925b2e6fac42d2901b979953cf6111-",
+      "data": {
+        "label": "Insert operation name JSON",
+        "name": "insert_key_value_in_json",
+        "_type": "Calc",
+        "input": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true,
+            "dynamic_inputs_map": {
+              "undefined": {}
+            }
+          },
+          "key": {
+            "_type": "String",
+            "label": "key",
+            "value": {
+              "String": "operationName"
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": false,
+            "dynamic_inputs_map": {
+              "undefined": {}
+            }
+          },
+          "val": {
+            "_type": "Enum",
+            "label": "val",
+            "value": {
+              "Enum": "String"
+            },
+            "disallow_node_connection": true,
+            "options": [],
+            "dynamic_inputs_map": {
+              "String": {
+                "String": {
+                  "label": "String",
+                  "_type": "String",
+                  "value": {
+                    "String": "GetLabcarBuildOrder"
+                  },
+                  "is_connected": false
+                }
+              }
+            },
+            "is_dynamic_input_trigger": true,
+            "is_connected": false
+          }
+        },
+        "output": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "is_connected": true
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Parsed",
+            "Error"
+          ]
+        }
+      }
+    },
+    "2ae876f6530042e6b84396a5f1865ca6-": {
+      "id": "2ae876f6530042e6b84396a5f1865ca6-",
+      "type": "Prompt",
+      "position": {
+        "x": 728.8680446780095,
+        "y": -30.39440846906902
+      },
+      "data": {
+        "label": "Prompt VIN",
+        "name": "continue",
+        "_type": "Prompt",
+        "input": {
+          "message": {
+            "_type": "String",
+            "label": "Message",
+            "value": {
+              "String": ""
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true
+          },
+          "image_url": {
+            "_type": "String",
+            "label": "Image URL",
+            "value": {
+              "String": ""
+            },
+            "disallow_node_connection": true,
+            "is_dynamic_input_trigger": false
+          }
+        },
+        "output": {},
+        "control_flow": {
+          "signals": [
+            "Continue"
+          ]
+        },
+        "type": "Prompt"
+      }
+    },
+    "e3231a8377804482e8ab2309315479f84-value-2ae876f6530042e6b84396a5f1865ca6-message": {
+      "source": "3231a8377804482e8ab2309315479f84-",
+      "sourceHandle": "value",
+      "target": "2ae876f6530042e6b84396a5f1865ca6-",
+      "targetHandle": "message",
+      "id": "e3231a8377804482e8ab2309315479f84-value-2ae876f6530042e6b84396a5f1865ca6-message",
+      "style": {
+        "stroke": "#cc0066"
+      }
+    },
+    "e3231a8377804482e8ab2309315479f84-Error-2ae876f6530042e6b84396a5f1865ca6-Run": {
+      "source": "3231a8377804482e8ab2309315479f84-",
+      "sourceHandle": "Error",
+      "target": "2ae876f6530042e6b84396a5f1865ca6-",
+      "targetHandle": "Run",
+      "id": "e3231a8377804482e8ab2309315479f84-Error-2ae876f6530042e6b84396a5f1865ca6-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e3231a8377804482e8ab2309315479f84-Success-2ae876f6530042e6b84396a5f1865ca6-Run": {
+      "source": "3231a8377804482e8ab2309315479f84-",
+      "sourceHandle": "Success",
+      "target": "2ae876f6530042e6b84396a5f1865ca6-",
+      "targetHandle": "Run",
+      "id": "e3231a8377804482e8ab2309315479f84-Success-2ae876f6530042e6b84396a5f1865ca6-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e324964d867e04a9cbf818c30f1bb31e5-str-3d136efc87734284b558477d08b3966b-val:String": {
+      "source": "324964d867e04a9cbf818c30f1bb31e5-",
+      "sourceHandle": "str",
+      "target": "3d136efc87734284b558477d08b3966b-",
+      "targetHandle": "val:String",
+      "id": "e324964d867e04a9cbf818c30f1bb31e5-str-3d136efc87734284b558477d08b3966b-val:String",
+      "style": {
+        "stroke": "#cc0066"
+      }
+    },
+    "e3d136efc87734284b558477d08b3966b-Parsed-8d925b2e6fac42d2901b979953cf6111-Run": {
+      "source": "3d136efc87734284b558477d08b3966b-",
+      "sourceHandle": "Parsed",
+      "target": "8d925b2e6fac42d2901b979953cf6111-",
+      "targetHandle": "Run",
+      "id": "e3d136efc87734284b558477d08b3966b-Parsed-8d925b2e6fac42d2901b979953cf6111-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e3d136efc87734284b558477d08b3966b-body-8d925b2e6fac42d2901b979953cf6111-body": {
+      "source": "3d136efc87734284b558477d08b3966b-",
+      "sourceHandle": "body",
+      "target": "8d925b2e6fac42d2901b979953cf6111-",
+      "targetHandle": "body",
+      "id": "e3d136efc87734284b558477d08b3966b-body-8d925b2e6fac42d2901b979953cf6111-body",
+      "style": {
+        "stroke": "#ffcc00"
+      }
+    },
+    "e8d925b2e6fac42d2901b979953cf6111-Parsed-00fd8c6f5d804133b13437cb900c4b83-Run": {
+      "source": "8d925b2e6fac42d2901b979953cf6111-",
+      "sourceHandle": "Parsed",
+      "target": "00fd8c6f5d804133b13437cb900c4b83-",
+      "targetHandle": "Run",
+      "id": "e8d925b2e6fac42d2901b979953cf6111-Parsed-00fd8c6f5d804133b13437cb900c4b83-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e8d925b2e6fac42d2901b979953cf6111-body-00fd8c6f5d804133b13437cb900c4b83-body": {
+      "source": "8d925b2e6fac42d2901b979953cf6111-",
+      "sourceHandle": "body",
+      "target": "00fd8c6f5d804133b13437cb900c4b83-",
+      "targetHandle": "body",
+      "id": "e8d925b2e6fac42d2901b979953cf6111-body-00fd8c6f5d804133b13437cb900c4b83-body",
+      "style": {
+        "stroke": "#ffcc00"
+      }
+    },
+    "467f9ba360ce4419a838eeddb8c837a4-": {
+      "id": "467f9ba360ce4419a838eeddb8c837a4-",
+      "type": "Prompt",
+      "position": {
+        "x": 1831.885429660837,
+        "y": -81.34256703061614
+      },
+      "data": {
+        "label": "Promt POST Elemental",
+        "name": "continue",
+        "_type": "Prompt",
+        "input": {
+          "message": {
+            "_type": "String",
+            "label": "Message",
+            "value": {
+              "String": ""
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true
+          },
+          "image_url": {
+            "_type": "String",
+            "label": "Image URL",
+            "value": {
+              "String": ""
+            },
+            "disallow_node_connection": true,
+            "is_dynamic_input_trigger": false
+          }
+        },
+        "output": {},
+        "control_flow": {
+          "signals": [
+            "Continue"
+          ]
+        },
+        "type": "Prompt"
+      }
+    },
+    "e00fd8c6f5d804133b13437cb900c4b83-Success-467f9ba360ce4419a838eeddb8c837a4-Run": {
+      "source": "00fd8c6f5d804133b13437cb900c4b83-",
+      "sourceHandle": "Success",
+      "target": "467f9ba360ce4419a838eeddb8c837a4-",
+      "targetHandle": "Run",
+      "id": "e00fd8c6f5d804133b13437cb900c4b83-Success-467f9ba360ce4419a838eeddb8c837a4-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e00fd8c6f5d804133b13437cb900c4b83-Fail-467f9ba360ce4419a838eeddb8c837a4-Run": {
+      "source": "00fd8c6f5d804133b13437cb900c4b83-",
+      "sourceHandle": "Fail",
+      "target": "467f9ba360ce4419a838eeddb8c837a4-",
+      "targetHandle": "Run",
+      "id": "e00fd8c6f5d804133b13437cb900c4b83-Fail-467f9ba360ce4419a838eeddb8c837a4-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e00fd8c6f5d804133b13437cb900c4b83-error-467f9ba360ce4419a838eeddb8c837a4-message": {
+      "source": "00fd8c6f5d804133b13437cb900c4b83-",
+      "sourceHandle": "error",
+      "target": "467f9ba360ce4419a838eeddb8c837a4-",
+      "targetHandle": "message",
+      "id": "e00fd8c6f5d804133b13437cb900c4b83-error-467f9ba360ce4419a838eeddb8c837a4-message",
+      "style": {
+        "stroke": "#cc0066"
+      }
+    },
+    "737f3eba4b3643c981b5265928b6805b-": {
+      "id": "737f3eba4b3643c981b5265928b6805b-",
+      "type": "Calc",
+      "position": {
+        "x": 1792.2285094831395,
+        "y": 45.068267247088045
+      },
+      "data": {
+        "label": "Extract JSON Value (data)",
+        "name": "extract_json_value",
+        "_type": "Calc",
+        "input": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true
+          },
+          "key": {
+            "_type": "String",
+            "label": "key",
+            "value": {
+              "String": "data"
+            },
+            "is_dynamic_input_trigger": false
+          }
+        },
+        "output": {
+          "value": {
+            "_type": "Json",
+            "label": "value",
+            "value": {
+              "Json": "{}"
+            },
+            "is_connected": true
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Success",
+            "Error"
+          ]
+        },
+        "type": "Calc"
+      }
+    },
+    "e00fd8c6f5d804133b13437cb900c4b83-response-737f3eba4b3643c981b5265928b6805b-body": {
+      "source": "00fd8c6f5d804133b13437cb900c4b83-",
+      "sourceHandle": "response",
+      "target": "737f3eba4b3643c981b5265928b6805b-",
+      "targetHandle": "body",
+      "id": "e00fd8c6f5d804133b13437cb900c4b83-response-737f3eba4b3643c981b5265928b6805b-body",
+      "style": {
+        "stroke": "#ffcc00"
+      }
+    },
+    "e00fd8c6f5d804133b13437cb900c4b83-Success-737f3eba4b3643c981b5265928b6805b-Run": {
+      "source": "00fd8c6f5d804133b13437cb900c4b83-",
+      "sourceHandle": "Success",
+      "target": "737f3eba4b3643c981b5265928b6805b-",
+      "targetHandle": "Run",
+      "id": "e00fd8c6f5d804133b13437cb900c4b83-Success-737f3eba4b3643c981b5265928b6805b-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "99a4a191ae7f4fed97b3ef61a4105f30-": {
+      "type": "Calc",
+      "position": {
+        "x": 2067.2285094831395,
+        "y": 47.068267247088045
+      },
+      "id": "99a4a191ae7f4fed97b3ef61a4105f30-",
+      "data": {
+        "label": "Extract Metadata Page",
+        "name": "extract_json_value",
+        "_type": "Calc",
+        "input": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "dynamic_inputs_map": {
+              "undefined": {}
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true
+          },
+          "key": {
+            "_type": "String",
+            "label": "key",
+            "value": {
+              "String": "metadataPage"
+            },
+            "dynamic_inputs_map": {
+              "undefined": {}
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": false
+          }
+        },
+        "output": {
+          "value": {
+            "_type": "Json",
+            "label": "value",
+            "value": {
+              "Json": "{}"
+            },
+            "is_connected": true
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Success",
+            "Error"
+          ]
+        },
+        "type": "Calc"
+      }
+    },
+    "e737f3eba4b3643c981b5265928b6805b-Success-99a4a191ae7f4fed97b3ef61a4105f30-Run": {
+      "source": "737f3eba4b3643c981b5265928b6805b-",
+      "sourceHandle": "Success",
+      "target": "99a4a191ae7f4fed97b3ef61a4105f30-",
+      "targetHandle": "Run",
+      "id": "e737f3eba4b3643c981b5265928b6805b-Success-99a4a191ae7f4fed97b3ef61a4105f30-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e737f3eba4b3643c981b5265928b6805b-value-99a4a191ae7f4fed97b3ef61a4105f30-body": {
+      "source": "737f3eba4b3643c981b5265928b6805b-",
+      "sourceHandle": "value",
+      "target": "99a4a191ae7f4fed97b3ef61a4105f30-",
+      "targetHandle": "body",
+      "id": "e737f3eba4b3643c981b5265928b6805b-value-99a4a191ae7f4fed97b3ef61a4105f30-body",
+      "style": {
+        "stroke": "#ffcc00"
+      }
+    },
+    "22bfa791bd7a4bd2b6022901a7149be1-": {
+      "type": "Calc",
+      "position": {
+        "x": 2387.2285094831395,
+        "y": 47.068267247088045
+      },
+      "id": "22bfa791bd7a4bd2b6022901a7149be1-",
+      "data": {
+        "label": "Extract Labcar Build-Order Records",
+        "name": "extract_json_value",
+        "_type": "Calc",
+        "input": {
+          "body": {
+            "_type": "Json",
+            "label": "body",
+            "value": {
+              "Json": "{}"
+            },
+            "dynamic_inputs_map": {
+              "undefined": {}
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": true
+          },
+          "key": {
+            "_type": "String",
+            "label": "key",
+            "value": {
+              "String": "records"
+            },
+            "dynamic_inputs_map": {
+              "undefined": {}
+            },
+            "is_dynamic_input_trigger": false,
+            "is_connected": false
+          }
+        },
+        "output": {
+          "value": {
+            "_type": "Json",
+            "label": "value",
+            "value": {
+              "Json": "{}"
+            },
+            "is_connected": true
+          }
+        },
+        "control_flow": {
+          "signals": [
+            "Success",
+            "Error"
+          ]
+        },
+        "type": "Calc"
+      }
+    },
+    "e99a4a191ae7f4fed97b3ef61a4105f30-Success-22bfa791bd7a4bd2b6022901a7149be1-Run": {
+      "source": "99a4a191ae7f4fed97b3ef61a4105f30-",
+      "sourceHandle": "Success",
+      "target": "22bfa791bd7a4bd2b6022901a7149be1-",
+      "targetHandle": "Run",
+      "id": "e99a4a191ae7f4fed97b3ef61a4105f30-Success-22bfa791bd7a4bd2b6022901a7149be1-Run",
+      "style": {
+        "stroke": "white"
+      }
+    },
+    "e99a4a191ae7f4fed97b3ef61a4105f30-value-22bfa791bd7a4bd2b6022901a7149be1-body": {
+      "source": "99a4a191ae7f4fed97b3ef61a4105f30-",
+      "sourceHandle": "value",
+      "target": "22bfa791bd7a4bd2b6022901a7149be1-",
+      "targetHandle": "body",
+      "id": "e99a4a191ae7f4fed97b3ef61a4105f30-value-22bfa791bd7a4bd2b6022901a7149be1-body",
+      "style": {
+        "stroke": "#ffcc00"
+      }
+    },
+    "e3231a8377804482e8ab2309315479f84-Success-3d136efc87734284b558477d08b3966b-Run": {
+      "source": "3231a8377804482e8ab2309315479f84-",
+      "sourceHandle": "Success",
+      "target": "3d136efc87734284b558477d08b3966b-",
+      "targetHandle": "Run",
+      "id": "e3231a8377804482e8ab2309315479f84-Success-3d136efc87734284b558477d08b3966b-Run",
+      "style": {
+        "stroke": "white"
+      }
+    }
+  }
+}
