@@ -216,7 +216,7 @@
         "input": {
           "origin": {
             "value": {
-              "String": "query GetLabcarBuildOrder{ metadataPage(serialNoContains: \""
+              "String": "query GetLabcarConfiguration{ metadata(serialNo: \""
             },
             "_type": "String",
             "label": "Origin"
@@ -231,7 +231,7 @@
           },
           "str2": {
             "value": {
-              "String": "\", limit: 1, offset: 0) { records { serialNo optionCodes data }}}"
+              "String": "\", useCache: false) { serialNo optionCodes materials { bomItemName hardwareId partId } data primaryConfig { payload { vehicleConfiguration { configuration { buildOrder ecuList metadata { entity brand vehiclePlatform vehicleType verwendungszweck } } signature checksum } vehicleIdentification { brand carId homologationRegion model modelYear tenant vin } } }}}"
             },
             "_type": "String",
             "label": "String 2"
@@ -275,7 +275,7 @@
             "_type": "String",
             "label": "URL",
             "value": {
-              "String": "https://elemental.app.usubv.plant.scoutway.io/elemental/graphql"
+              "String": "https://elemental.app-uat.usubv.plant.scoutway.io/elemental/graphql"
             },
             "is_dynamic_input_trigger": false
           },
@@ -490,7 +490,7 @@
                   "label": "String",
                   "_type": "String",
                   "value": {
-                    "String": "GetLabcarBuildOrder"
+                    "String": "GetLabcarConfiguration"
                   },
                   "is_connected": false
                 }
@@ -785,7 +785,7 @@
       },
       "id": "99a4a191ae7f4fed97b3ef61a4105f30-",
       "data": {
-        "label": "Extract Metadata Page",
+        "label": "Extract Metadata",
         "name": "extract_json_value",
         "_type": "Calc",
         "input": {
@@ -805,7 +805,7 @@
             "_type": "String",
             "label": "key",
             "value": {
-              "String": "metadataPage"
+              "String": "metadata"
             },
             "dynamic_inputs_map": {
               "undefined": {}
@@ -861,7 +861,7 @@
       },
       "id": "22bfa791bd7a4bd2b6022901a7149be1-",
       "data": {
-        "label": "Extract Records",
+        "label": "Extract Configuration Data",
         "name": "extract_json_value",
         "_type": "Calc",
         "input": {
@@ -881,7 +881,7 @@
             "_type": "String",
             "label": "key",
             "value": {
-              "String": "records"
+              "String": "data"
             },
             "dynamic_inputs_map": {
               "undefined": {}

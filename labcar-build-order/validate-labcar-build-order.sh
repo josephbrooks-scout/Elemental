@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly endpoint='https://elemental.app.usubv.plant.scoutway.io/elemental/graphql'
+readonly endpoint='https://elemental.app-uat.usubv.plant.scoutway.io/elemental/graphql'
 readonly vin="${1:-7WARME221YY000001}"
 
 command -v curl >/dev/null || {
@@ -14,8 +14,8 @@ command -v jq >/dev/null || {
 }
 
 request="$(jq -n --arg vin "$vin" '{
-  operationName: "GetLabcarBuildOrder",
-  query: "query GetLabcarBuildOrder($vin: String!) { metadataPage(serialNoContains: $vin, limit: 1, offset: 0) { records { serialNo vehicleId optionCodes data model modelYear } limit offset } }",
+  operationName: "GetLabcarConfiguration",
+  query: "query GetLabcarConfiguration($vin: String!) { metadata(serialNo: $vin, useCache: false) { serialNo optionCodes materials { bomItemName hardwareId partId } data primaryConfig { payload { vehicleConfiguration { configuration { buildOrder ecuList metadata { entity brand vehiclePlatform vehicleType verwendungszweck } } signature checksum } vehicleIdentification { brand carId homologationRegion model modelYear tenant vin } } } } }",
   variables: {vin: $vin}
 }')"
 
@@ -28,20 +28,16 @@ if jq -e '.errors | length > 0' >/dev/null <<<"$response"; then
   exit 1
 fi
 
-record_count="$(jq '[.data.metadataPage.records[] | select(.serialNo == $vin)] | length' \
-  --arg vin "$vin" <<<"$response")"
+record="$(jq '.data.metadata' <<<"$response")"
 
-if [[ "$record_count" != '1' ]]; then
-  printf 'Expected one build-order record for VIN %s; found %s.\n' "$vin" "$record_count" >&2
+if ! jq -e --arg vin "$vin" '.serialNo == $vin' >/dev/null <<<"$record"; then
+  printf 'No legacy metadata record found for VIN %s.\n' "$vin" >&2
   exit 1
 fi
 
-record="$(jq '.data.metadataPage.records[] | select(.serialNo == $vin)' \
-  --arg vin "$vin" <<<"$response")"
-
-if ! jq -e '.data.data[0].orderData.prNumbers | type == "array" and length > 0' \
+if ! jq -e '.data.vehicleConfiguration.configuration.buildOrder | type == "object" and length > 0' \
   >/dev/null <<<"$record"; then
-  printf 'The build-order record does not contain orderData.prNumbers.\n' >&2
+  printf 'The metadata record does not contain a build order.\n' >&2
   exit 1
 fi
 
@@ -52,12 +48,13 @@ fi
 
 jq '{
   serialNo,
-  vehicleId,
-  model,
-  modelYear,
   optionCodeCount: (.optionCodes | length),
-  prNumberCount: (.data.data[0].orderData.prNumbers | length),
-  hasAed30Q: ([.data.data[0].orderData.prNumbers[] | select(.family == "AED" and .number == "30Q")] | length == 1),
+  materialCount: (.materials | length),
+  buildOrderFamilyCount: (.data.vehicleConfiguration.configuration.buildOrder | length),
+  ecuCount: (.data.vehicleConfiguration.configuration.ecuList | length),
+  hasAed30Q: (.data.vehicleConfiguration.configuration.buildOrder.AED == "30Q"),
+  storedSnr: .data.vehicleConfiguration.configuration.buildOrder.SNR,
+  vehicleIdentification: .data.vehicleIdentification,
   optionCodes,
-  prNumbers: .data.data[0].orderData.prNumbers
+  buildOrder: .data.vehicleConfiguration.configuration.buildOrder
 }' <<<"$record"
