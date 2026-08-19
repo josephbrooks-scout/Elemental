@@ -211,7 +211,7 @@
       },
       "data": {
         "name": "concat",
-        "label": "Build Labcar Build-Order Query",
+        "label": "Build Query",
         "_type": "Calc",
         "input": {
           "origin": {
@@ -861,7 +861,7 @@
       },
       "id": "22bfa791bd7a4bd2b6022901a7149be1-",
       "data": {
-        "label": "Extract Labcar Build-Order Records",
+        "label": "Extract Records",
         "name": "extract_json_value",
         "_type": "Calc",
         "input": {
