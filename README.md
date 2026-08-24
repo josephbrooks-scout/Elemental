@@ -6,6 +6,13 @@ The [`labcar-build-order/`](./labcar-build-order/) integration retrieves the
 Labcar configuration stored in UAT legacy Elemental metadata. It provides the
 option-code and vehicle-configuration data needed by the RiDE configuration flow.
 
+### Blueprint creation docs
+
+Blueprint implementation progress, wiring notes, and test readiness artifacts are
+tracked in:
+
+- [`labcar-build-order/blueprint-creation/`](./labcar-build-order/blueprint-creation/)
+
 ### Contents
 
 - [`labcar-build-order-blueprint.json`](./labcar-build-order/labcar-build-order-blueprint.json):
